@@ -1,7 +1,7 @@
 # =====================================================================================
 #  C O P Y R I G H T
 # -------------------------------------------------------------------------------------
-#  Copyright (c) 2022 by Robert Bosch GmbH. All rights reserved.
+#  Copyright (c) 2023 by Robert Bosch GmbH. All rights reserved.
 #
 #  Author(s):
 #  - Markus Braun, :em engineering methods AG (contracted by Robert Bosch GmbH)
@@ -38,7 +38,7 @@ release = version_from_project_toml()
 needs_sphinx = "4.4.0"
 source_suffix = ".rst"
 master_doc = "index"
-language = None
+language = "en"
 templates_path = ["docs/_templates"]
 
 # List of patterns, relative to source directory, that match files and

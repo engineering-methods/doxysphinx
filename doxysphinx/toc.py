@@ -1,7 +1,7 @@
 # =====================================================================================
 #  C O P Y R I G H T
 # -------------------------------------------------------------------------------------
-#  Copyright (c) 2022 by Robert Bosch GmbH. All rights reserved.
+#  Copyright (c) 2023 by Robert Bosch GmbH. All rights reserved.
 #
 #  Author(s):
 #  - Markus Braun, :em engineering methods AG (contracted by Robert Bosch GmbH)
@@ -9,6 +9,7 @@
 """The toc module contains classes related to the toctree generation for doxygen htmls/rsts."""
 
 import re
+import unicodedata
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any, Dict, Iterable, Iterator, List, Protocol, Tuple
@@ -153,9 +154,9 @@ class DoxygenTocGenerator:
         apply(structural_dummies, self._prepare_structural_dummy)
         apply(structural_dummies, self._create_toc_file_for_structural_dummy)
 
-        self._menu_lookup: Dict[str, _MenuEntry] = dict(
-            {e.docname: e for e in self._flatten_tree(self._menu) if not e.is_leaf}
-        )
+        self._menu_lookup: Dict[str, _MenuEntry] = {
+            e.docname: e for e in self._flatten_tree(self._menu) if not e.is_leaf
+        }
 
     def _parse_template(self) -> Tuple[str, str]:
         """Parse a "doxygen html template shell" out of the index.html file.
@@ -188,13 +189,26 @@ class DoxygenTocGenerator:
 
         return prefix_replaced + split_start_search.replace('\\"', '"'), split_end_search + suffix
 
+    def _sanitize_filename(self, value: str) -> str:
+        """Sanitize value to make it usable as a filename.
+
+        - Try to replace unicode characters with ascii fallbacks
+        - drop any remaining non-ascii characters
+        - converts to lower case
+        - replace whitespace and slashes with underscores
+        - keeps only alphanumerics, dash and underscore
+        """
+        value = unicodedata.normalize("NFKD", value)
+        value = value.encode("ascii", "ignore").decode("ascii")
+        value = re.sub(r"[\s/]", "_", value.lower())
+        return re.sub(r"[^\w\-_]", "", value)
+
     def _prepare_structural_dummy(self, structural_dummy: _MenuEntry):
-        clean_title = structural_dummy.title.replace(" ", "_").lower()
+        clean_title = self._sanitize_filename(structural_dummy.title)
         toc_docname = f"{structural_dummy.docname}_{clean_title}"
         structural_dummy.docname = toc_docname
 
     def _create_toc_file_for_structural_dummy(self, structural_dummy: _MenuEntry):
-
         prefix, suffix = self._doxy_html_template
 
         content = [

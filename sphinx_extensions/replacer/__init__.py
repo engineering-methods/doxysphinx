@@ -1,7 +1,7 @@
 # =====================================================================================
 #  C O P Y R I G H T
 # -------------------------------------------------------------------------------------
-#  Copyright (c) 2022 by Robert Bosch GmbH. All rights reserved.
+#  Copyright (c) 2023 by Robert Bosch GmbH. All rights reserved.
 #
 #  Author(s):
 #  - Markus Braun, :em engineering methods AG (contracted by Robert Bosch GmbH)
@@ -41,7 +41,6 @@ class JinjaReplacer:
         """
         if app.builder.format != "html":
             return
-
         source_text = source[0]
         rendered = app.builder.templates.render_string(source_text, app.config.html_context)
         source[0] = rendered

@@ -13,6 +13,79 @@
 
 <!--next-version-placeholder-->
 
+## v3.3.4 (2023-06-16)
+
+### Fix
+
+- **resources**: writing compiled css as utf-8 now
+
+## v3.3.3 (2023-04-27)
+
+### Fix
+
+- Encoding issues on windows
+
+## v3.3.2 (2023-04-27)
+
+### Fix
+
+- check if doxygen.css exists before pre-processing
+
+## v3.3.1 (2023-04-27)
+
+### Fix
+
+- **toc**: Fix illegal characters in structural dummy titles
+
+## v3.3.0 (2023-04-20)
+
+### Feat
+
+- **prerequisites**: dartsass isn't needed anymore because we switched to libsass
+
+### Fix
+
+- **styling**: fixes doxygen page headings
+- **parser**: removed annotated.html from parsing exclusion list
+- **resourceprovision**: fixed caching not working for stylesheets
+- **devcontainer**: fixed devcontainer which was broken on first run.
+- **pre-commit**: reactivated conventional commit checking
+
+### Refactor
+
+- fix for flake8 error C418 in toc.py
+
+### Perf
+
+- improve performance by parallelizing work over available cores
+- improve performance by better preselection
+- improved performance of json loading by an order of magnitude
+
+## v3.2.3 (2023-04-06)
+
+### Fix
+
+- **doxygen_cwd**: Interpret paths relative to working dir
+
+## v3.2.2 (2023-04-06)
+
+### Fix
+
+- **doxygen**: Don't launch doxygen from a shell
+
+## v3.2.1 (2023-02-28)
+
+### Fix
+
+- **rst_indent_warning**: Fixed rst indent warning
+
+## v3.2.0 (2023-02-16)
+
+### Feat
+
+- **code**: Removed emptyspaces before creating hash
+- **incremental_behaviour**: added incremental behaviour for doxysphinx
+
 ## v3.1.0 (2022-12-09)
 
 ### Feat
